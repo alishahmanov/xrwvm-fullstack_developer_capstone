@@ -1,9 +1,7 @@
 import os
 
 import requests
-from dotenv import load_dotenv
 
-load_dotenv()
 
 backend_url = os.getenv("backend_url", "http://127.0.0.1:3030").rstrip("/")
 sentiment_analyzer_url = os.getenv("sentiment_analyzer_url", "http://127.0.0.1:5050").rstrip("/")
