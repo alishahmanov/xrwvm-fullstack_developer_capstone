@@ -1,0 +1,29 @@
+services:
+  mongo:
+    image: mongo:7
+    volumes:
+      - mongo-data:/data/db
+  api:
+    build: ./server/database
+    environment:
+      MONGO_URL: mongodb://mongo:27017/dealershipsDB
+    depends_on:
+      - mongo
+  sentiment:
+    build: ./server/djangoapp/microservices
+  web:
+    build: .
+    environment:
+      DJANGO_DEBUG: "true"
+      backend_url: http://api:3030
+      sentiment_analyzer_url: http://sentiment:5050
+    ports:
+      - "127.0.0.1:8080:8080"
+    volumes:
+      - django-data:/data
+    depends_on:
+      - api
+      - sentiment
+volumes:
+  mongo-data:
+  django-data:

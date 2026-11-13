@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 const dealerships = new Schema({
 	id: {
     type: Number,
-    required: true,
+    required: true, unique: true,
 	},
 	city: {
     type: String,
@@ -15,6 +15,7 @@ const dealerships = new Schema({
     type: String,
     required: true
   },
+  st: String,
   address: {
     type: String,
     required: true

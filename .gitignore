@@ -103,6 +103,9 @@ celerybeat.pid
 
 # Environments
 .env
+node_modules/
+server/static/
+server/frontend/build/
 .venv
 env/
 venv/

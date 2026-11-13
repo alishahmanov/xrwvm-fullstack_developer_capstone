@@ -1,0 +1,24 @@
+name: Capstone CI
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build application containers
+        run: docker compose build
+      - name: Start application
+        run: docker compose up -d
+      - name: Verify Django, MongoDB API and sentiment
+        run: |
+          curl --fail --retry 15 --retry-all-errors --retry-delay 2 http://localhost:8080/
+          curl --fail --retry 15 --retry-all-errors --retry-delay 2 http://localhost:8080/djangoapp/get_dealers/Kansas
+          curl --fail http://localhost:8080/djangoapp/get_cars
+          docker compose exec -T web python -c "import requests; assert requests.get('http://sentiment:5050/analyze', params={'text': 'Wonderful service!'}, timeout=5).json() == {'sentiment': 'positive'}"
+      - name: Show service logs
+        if: failure()
+        run: docker compose logs

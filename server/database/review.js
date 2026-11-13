@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 const reviews = new Schema({
 	id: {
     type: Number,
-    required: true,
+    required: true, unique: true,
 	},
 	name: {
     type: String,
