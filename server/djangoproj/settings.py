@@ -64,7 +64,7 @@ ROOT_URLCONF = 'djangoproj.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'frontend' / 'build'],
+        'DIRS': [BASE_DIR / 'frontend' / 'build', BASE_DIR / 'frontend' / 'static'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -137,5 +137,5 @@ MEDIA_URL = '/media/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-STATICFILES_DIRS = [(BASE_DIR / 'frontend' / 'build' / 'static')] if (BASE_DIR / 'frontend' / 'build' / 'static').is_dir() else []
+STATICFILES_DIRS = [path for path in (BASE_DIR / 'frontend' / 'build' / 'static', BASE_DIR / 'frontend' / 'static') if path.is_dir()]
 

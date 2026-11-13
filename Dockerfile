@@ -15,6 +15,7 @@ COPY server/djangoproj ./djangoproj
 COPY server/djangoapp ./djangoapp
 COPY server/database/data/car_records.json ./database/data/car_records.json
 COPY --from=frontend /build/build ./frontend/build
+COPY server/frontend/static ./frontend/static
 RUN python manage.py collectstatic --noinput
 ENV DJANGO_DEBUG=false DJANGO_DB_PATH=/data/db.sqlite3
 RUN mkdir /data && chmod g+rwx /data

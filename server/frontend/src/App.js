@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, Route, Routes, useNavigate, useParams } from 'react-router-dom';
+import Register, { AccountForm } from './components/Register/Register';
 import { api } from './api';
 import carsImage from './components/assets/cars.jpeg';
 import './App.css';
@@ -39,8 +40,8 @@ function Header({ user, setUser }) {
     <nav aria-label="Main navigation">
       <Link to="/" className="brand">Best Cars</Link>
       <Link to="/dealers">Dealerships</Link>
-      <Link to="/about">About Us</Link>
-      <Link to="/contact">Contact Us</Link>
+      <a href="/about">About Us</a>
+      <a href="/contact">Contact Us</a>
       <div className="account">
         {user ? <><span>{user}</span><button onClick={signOut}>Log out</button></>
           : <><Link to="/login">Log in</Link><Link to="/register">Sign up</Link></>}
@@ -58,64 +59,6 @@ function Home() {
       <Link className="button" to="/dealers">Browse dealerships</Link>
     </div>
     <img src={carsImage} alt="Cars lined up at a dealership" />
-  </main>;
-}
-
-function About() {
-  return <main className="page">
-    <h1>About Us</h1>
-    <p>Best Cars helps shoppers compare dealerships across the United States. Our directory brings together dealer locations and first-hand customer reviews.</p>
-    <h2>What you can do</h2>
-    <ul><li>Find dealerships by state.</li><li>Read customer experiences before you visit.</li><li>Share your experience after a purchase.</li></ul>
-  </main>;
-}
-
-function Contact() {
-  return <main className="page">
-    <h1>Contact Us</h1>
-    <p>For questions about a dealership, open its listing to find the address.</p>
-    <p>For help with your account or to report a review, contact the Best Cars support team.</p>
-    <a href="mailto:support@bestcars.example">support@bestcars.example</a>
-    <p className="muted">This is a course demonstration. The support address is an example.</p>
-  </main>;
-}
-
-function AccountForm({ register, setUser }) {
-  const [error, setError] = useState('');
-  const [saving, setSaving] = useState(false);
-  const navigate = useNavigate();
-
-  async function submit(event) {
-    event.preventDefault();
-    setSaving(true);
-    setError('');
-    try {
-      const input = Object.fromEntries(new FormData(event.currentTarget));
-      const result = await api(register ? 'register' : 'login', input);
-      setUser(result.userName);
-      navigate('/dealers');
-    } catch (error) {
-      setError(error.message);
-    } finally {
-      setSaving(false);
-    }
-  }
-
-  return <main className="page form-page">
-    <h1>{register ? 'Create an account' : 'Log in'}</h1>
-    <form onSubmit={submit}>
-      {register && <>
-        <label>First name<input name="firstName" autoComplete="given-name" required /></label>
-        <label>Last name<input name="lastName" autoComplete="family-name" required /></label>
-        <label>Email<input type="email" name="email" autoComplete="email" required /></label>
-      </>}
-      <label>Username<input name="userName" autoComplete="username" required /></label>
-      <label>Password<input name="password" type="password" autoComplete={register ? 'new-password' : 'current-password'} required /></label>
-      {register && <label>Confirm password<input type="password" name="confirmation" autoComplete="new-password" required /></label>}
-      {error && <p role="alert">{error}</p>}
-      <button disabled={saving}>{register ? 'Sign up' : 'Log in'}</button>
-      {!register && <Link to="/register">Create an account</Link>}
-    </form>
   </main>;
 }
 
@@ -219,10 +162,8 @@ export default function App() {
     <Header user={user} setUser={setUser} />
     <Routes>
       <Route path="/" element={<Home />} />
-      <Route path="/about" element={<About />} />
-      <Route path="/contact" element={<Contact />} />
       <Route path="/login" element={<AccountForm key="login" setUser={setUser} />} />
-      <Route path="/register" element={<AccountForm key="register" register setUser={setUser} />} />
+      <Route path="/register" element={<Register setUser={setUser} />} />
       <Route path="/dealers" element={<Dealers user={user} />} />
       <Route path="/dealer/:id" element={<Dealer user={user} />} />
       <Route path="/postreview/:id" element={<PostReview user={user} />} />
