@@ -2,7 +2,6 @@ import os
 
 import requests
 
-
 backend_url = os.getenv("backend_url", "http://127.0.0.1:3030").rstrip("/")
 sentiment_analyzer_url = os.getenv("sentiment_analyzer_url", "http://127.0.0.1:5050").rstrip("/")
 

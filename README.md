@@ -1,4 +1,7 @@
-# Best Cars Dealerships
+# fullstack_developer_capstone
+
+**Project:** Best Cars Dealerships
+**Repository:** `xrwvm-fullstack_developer_capstone`
 
 A Django and React dealership directory backed by an Express API and MongoDB. A Flask service classifies review sentiment with VADER.
 

@@ -27,3 +27,6 @@ th { background: #e4edf3; }
 .muted { color: #526474; }
 [role=alert] { color: #a51c31; }
 @media (max-width: 680px) { .hero { grid-template-columns: 1fr; } .account { margin-left: 0; } }
+
+.sentiment { display: inline-flex; align-items: center; gap: .35rem; margin-left: .6rem; }
+.sentiment img { width: 1.5rem; height: 1.5rem; object-fit: contain; }

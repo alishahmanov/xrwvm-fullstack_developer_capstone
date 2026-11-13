@@ -35,7 +35,7 @@ export function AccountForm({ register, setUser }) {
       <label>Password<input name="password" type="password" autoComplete={register ? 'new-password' : 'current-password'} required /></label>
       {register && <label>Confirm password<input type="password" name="confirmation" autoComplete="new-password" required /></label>}
       {error && <p role="alert">{error}</p>}
-      <button disabled={saving}>{register ? 'Sign up' : 'Log in'}</button>
+      <button disabled={saving}>{register ? 'Register' : 'Log in'}</button>
       {!register && <Link to="/register">Create an account</Link>}
     </form>
   </main>;

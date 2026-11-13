@@ -2,6 +2,9 @@ import { useEffect, useState } from 'react';
 import { Link, Route, Routes, useNavigate, useParams } from 'react-router-dom';
 import Register, { AccountForm } from './components/Register/Register';
 import { api } from './api';
+import positiveIcon from './components/assets/positive.png';
+import neutralIcon from './components/assets/neutral.png';
+import negativeIcon from './components/assets/negative.png';
 import carsImage from './components/assets/cars.jpeg';
 import './App.css';
 
@@ -89,6 +92,8 @@ function Dealers({ user }) {
   </main>;
 }
 
+const sentimentIcons = { positive: positiveIcon, neutral: neutralIcon, negative: negativeIcon };
+
 function Dealer({ user }) {
   const { id } = useParams();
   const [details, detailError] = useResource('dealer/' + id, {});
@@ -105,7 +110,7 @@ function Dealer({ user }) {
     {results.reviews?.map(review => <article key={review.id} className="review">
       <p>{review.review}</p>
       <div className="muted">{review.name} · {review.car_year} {review.car_make} {review.car_model}
-        {review.sentiment && ' · ' + review.sentiment}</div>
+        {sentimentIcons[review.sentiment] && <span className="sentiment"><img src={sentimentIcons[review.sentiment]} alt="" />{review.sentiment}</span>}</div>
     </article>)}
   </main>;
 }
