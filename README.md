@@ -11,3 +11,7 @@ The app supports registration, sign-in, state filtering, individual dealership p
 ## Configuration
 
 Set `MONGO_URL` on the Express service and `backend_url` and `sentiment_analyzer_url` on Django for non-Compose deployments. Set `DJANGO_SECRET_KEY`, `DJANGO_ALLOWED_HOSTS` and `DJANGO_CSRF_TRUSTED_ORIGINS` for HTTPS deployment. Mount persistent storage at `/data` for Django and `/data/db` for MongoDB.
+
+## Kubernetes
+
+Build and publish the three application images and set their references in `deploy/deployment.yml`. Create a `best-cars` ConfigMap with `DJANGO_ALLOWED_HOSTS` and `DJANGO_CSRF_TRUSTED_ORIGINS`, and a `best-cars` Secret with `django-secret-key`. Apply the manifest, then configure your cluster's HTTPS ingress or OpenShift route for the `web` service on port 8080.
